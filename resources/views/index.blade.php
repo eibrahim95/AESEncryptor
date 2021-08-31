@@ -180,7 +180,7 @@
                                         <button type="submit" class="btn btn-primary ">Run Another Task</button>
                                     </div>
                                 </form>
-                                <a class="btn btn-secondary" @click="downloadFile">Download Resulting File</a>
+                                <a class="btn btn-secondary" :download="downloadFileNAme" :href="downloadLink">Download Resulting File</a>
                                 <form @submit="useFile()" class="d-inline-block">
                                     @csrf
                                     <div class="w-100">
@@ -214,7 +214,6 @@
 <script src="//cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js"></script>
 <script src="{{asset('js/sweet-alert.min.js')}}"></script>
 
 <script>
@@ -272,6 +271,9 @@
             },
             progress: function (){
                 return 100*(this.activeStep-1)/2;
+            },
+            downloadLink: function () {
+                    return '{{asset('storage/random')}}'.replace('random', this.selectedFile.output_path);
             }
         },
         methods: {
